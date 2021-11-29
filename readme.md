@@ -17,7 +17,11 @@ _Use `aptitude` if you encounter issues with dependencies while installing GLU o
 ## Build and run
 1. Clone the repository ``sh git clone  https://github.com/mimidotsuser/road-to-3d-graphics.git``
 2. Enter the directory ``cd road-to-3d-graphics``
-2. Make a build directory & enter it ``mkdir build && cd build``.
-3. Generate build files ``cmake -DCMAKE_BUILD_TYPE=Debug ../``
-4. Build the project ``make all``
-5. Run the build output ``./graphics``
+3. Make a build directory & enter it ``mkdir build && cd build``.
+4. Generate build files ``cmake -DCMAKE_BUILD_TYPE=Debug ../``
+5. Build the project ``make all``
+6. Run the build output ``./graphics``
+
+## Reference notes
+- These are my personal notes and accuracy is not guaranteed 
+1. [Introduction](notes/1-%20intro.md)
