@@ -7,7 +7,7 @@ set(CMAKE_C_STANDARD 99)
 add_definitions(-DGLEW_STATIC) #static linking flag for windows
 
 find_package(GLEW REQUIRED)
-find_package(GLU REQUIRED)
+find_package(OpenGL REQUIRED)
 add_executable(graphics main.c)
 
 target_link_libraries(graphics GL GLEW glfw)
