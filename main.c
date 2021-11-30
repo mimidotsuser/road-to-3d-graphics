@@ -2,35 +2,30 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
-
-
-void logger(int code, char *message) {
-    if (code == 1) {
-        fprintf(stderr, "%s\n", message);
-    } else {
-        printf("%s\n", message);
-    }
-}
+#include "main.h"
 
 char *loadShader(char *filename) {
     FILE *file = fopen(filename, "r");
 
     if (file == NULL) {
 
-        logger(1, "Could not open file");
+        logger(stderr, "Could not open file %s", filename);
+        exit(1);
     }
 
     unsigned int size = -1;
     if (fseek(file, 0, SEEK_END) == 0) {
         size = (int) ftell(file);
         if (size == -1) {
-            logger(1, "File is empty ");
+            logger(stderr, "Could not seek to end of file: %s: ", filename);
+            exit(1);
         }
     }
     char *shaderContent = malloc(sizeof(char) * (size));
 
     if (fseek(file, 0L, SEEK_SET) != 0) {
-        logger(1, "Error encountered while reading file");
+        logger(stderr, "Could not seek to the start of file %s", filename);
+        exit(1);
     }
 
     //read the file into the buffer
@@ -57,12 +52,11 @@ static GLuint compileShader(GLuint shaderType, const char *source) {
         glGetShaderInfoLog(shader, errorLength, &errorLength, message);
 
         if (shaderType == GL_VERTEX_SHADER) {
-            logger(1, "Failed to compile the vertex shader ");
+            logger(stderr, "Failed to compile the vertex shader %s", source);
         } else {
-            logger(1, "Failed to compile the fragment shader ");
+            logger(stderr, "Failed to compile the fragment shader %s", source);
         }
 
-        logger(1, message);
         free(message);
         glDeleteShader(shader);
         exit(1);
@@ -94,20 +88,21 @@ static GLuint createShader(const char *vertexShader, const char *fragmentShader)
 int main() {
 
     if (!glfwInit()) {
-        logger(1, "Cannot initialize GL");
-        return 1;
+        logger(stderr, "Cannot initialize GL");
+        exit(1);
     }
 
     GLFWwindow *window = glfwCreateWindow(1024, 768, "Mino Game", NULL, NULL);
     if (window == NULL) {
-        logger(1, "Failed to create a GL window");
+        logger(stderr, "Failed to create a GL window");
         glfwTerminate();
-        return 1;
+        exit(1);
     }
     glfwMakeContextCurrent(window); //create an OpenGL rendering context
 
     if (glewInit() != GLEW_OK) {
-        logger(1, "Failed to initialize gle");
+        logger(stderr, "Failed to initialize glew extension wrangler");
+        exit(1);
     }
 
     float pos[] = {
