@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(GRAPHICS101 C)
 
 set(CMAKE_C_STANDARD 99)
-
+set(CMAKE_C_FLAGS_DEBUG "-g -DDEBUG")
 
 add_definitions(-DGLEW_STATIC) #static linking flag for windows
 
