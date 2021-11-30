@@ -85,6 +85,10 @@ static GLuint createShader(const char *vertexShader, const char *fragmentShader)
     return program;
 }
 
+void resizeCallback(GLFWwindow *window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
+
 int main() {
 
     if (!glfwInit()) {
@@ -92,12 +96,15 @@ int main() {
         exit(1);
     }
 
-    GLFWwindow *window = glfwCreateWindow(1024, 768, "Mino Game", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(928, 692, "Mino Game", NULL, NULL);
     if (window == NULL) {
         logger(stderr, "Failed to create a GL window");
         glfwTerminate();
         exit(1);
     }
+
+    glfwSetFramebufferSizeCallback(window, resizeCallback);
+
     glfwMakeContextCurrent(window); //create an OpenGL rendering context
 
     if (glewInit() != GLEW_OK) {
